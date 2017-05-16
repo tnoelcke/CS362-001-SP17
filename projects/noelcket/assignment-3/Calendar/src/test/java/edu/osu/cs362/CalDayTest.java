@@ -52,10 +52,44 @@ public class CalDayTest {
 		test.addAppt(toAdd1);
 		test.addAppt(toAdd2);
 		test.addAppt(toAdd3);
+		
 		int num = test.getSizeAppts();
 		assertEquals(3, num);
-	}
+		
 
+		
+		test = new CalDay(cal);
+		
+		//adds a bunch more appts to the test class.
+		for(int i = 23; i >= 0; i--){
+			toAdd3 = new Appt(i, 26, 26, 4, 2017,"Test", "Killing mutants");
+			test.addAppt(toAdd3);
+		}
+		
+		LinkedList<Appt> order = test.getAppts();
+		int startHour;
+		for(int i = 0; i < order.size(); i++){
+			startHour = order.get(i).getStartHour();
+			assertEquals(i, startHour);
+		}
+
+		
+		for(int i = 10; i < 17; i++){
+			toAdd3 = new Appt(i, 26, 26, 4, 2017, "test", "test");
+			test.addAppt(toAdd3);
+		}
+		
+		order = test.getAppts();
+		startHour = order.get(0).getStartHour();
+		boolean result;
+		
+		for(int i = 1; i < order.size(); i++){
+			result = startHour <= order.get(i).getStartHour();
+			assertTrue(result);
+			startHour = order.get(i).getStartHour();
+		}
+	}
+	
 	//checks the toString Method
 	@Test
 	public void testToString(){
@@ -72,9 +106,11 @@ public class CalDayTest {
 		
 		//make sure the string is not null.
 		assertNotNull(check);
-		CalDay test2 = new CalDay();
-		check = test2.toString();
-
+		assertTrue((check.length() > 100));
+		
+		
+		
+		
 	}
 
 	@Test
@@ -110,9 +146,6 @@ public class CalDayTest {
 		test.addAppt(toAdd1);
 		test.addAppt(toAdd2);
 		toTest = test.iterator();
-		assertNotNull(toTest);
-
-
-		 
+		assertNotNull(toTest);		 
 	}
 }	

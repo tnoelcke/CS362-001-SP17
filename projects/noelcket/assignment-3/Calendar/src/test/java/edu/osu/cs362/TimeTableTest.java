@@ -23,16 +23,32 @@ public class TimeTableTest {
 		Appt one = new Appt(10, 10, 10, 12, 2017, "test 1", "This is the first test appointment");
 		Appt two = new Appt(11, 11, 11, 12, 2017, "Test 2", "second test");
 		Appt three = new Appt(12, 12, 12, 12, 2017, "Test 3", "Third test");
-		Appt four = new Appt(26, 12, 12, 12, 2017, "Bad test", "bad Test");
+		Appt four = new Appt(21, 12, 12, 12, 2017, "Bad test", "bad Test");
+		Appt five = new Appt(21, 12, 15, 12, 2017, "Bad test", "Bad Test");
+		Appt six = new Appt(21, 12, 1, 12, 2017, "Bad Test", "Bad Test");
 		GregorianCalendar start = new GregorianCalendar(2017,12, 9);
 		GregorianCalendar end = new GregorianCalendar(2017, 12, 13);
 		appts.add(one);
 		appts.add(two);
 		appts.add(three);
 		appts.add(four);
+		appts.add(five);
+		appts.add(six);
 		LinkedList<CalDay> result = test.getApptRange(appts, start, end);
 		assertEquals(4, result.size());
-			
+		
+		int numApp = 0;
+		for(int i = 0; i < 4; i++){
+			numApp += result.get(i).getSizeAppts();
+		}
+		assertEquals(4, numApp);
+		
+		for(int i = 0; i < 4; i++){
+			for(int j = 0; j < result.get(i).getSizeAppts(); j++) {
+				boolean sameDay = (result.get(i).getAppts().get(j).getStartDay() == result.get(i).getDay());
+				assertTrue(sameDay);
+			}
+		}
 	}
 
 	//tests if the selected item is deleted from the time table.
@@ -62,4 +78,9 @@ public class TimeTableTest {
 		badDelete = test.deleteAppt(appts, one);
 		assertNull(badDelete);
 	} 
+	
+	@Test
+	public void testExceptionBranch(){
+		
+	}
 }

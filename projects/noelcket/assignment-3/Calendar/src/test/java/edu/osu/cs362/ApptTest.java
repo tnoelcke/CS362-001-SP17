@@ -43,8 +43,8 @@ public class ApptTest {
 	// This test tests that is valid is doing the correct thing.
 	@Test
 	public void isValidTest(){
-		int validHour = 1;
-		int validStartMin = 1;
+		int validHour = 10;
+		int validStartMin = 10;
 		int validDay = 10;
 		int validMonth = 10;
 		int validYear = 2017;
@@ -53,24 +53,70 @@ public class ApptTest {
 		
 		//tests each case for each variable in the is valid fuction
 		Appt valid = new Appt(validHour, validStartMin, validDay, validMonth, validYear, title, description);
-		boolean isValid = valid.getValid();
-		Appt invalid1 = new Appt(31, validStartMin, validDay, validMonth, validYear, title, description);
-		boolean isInvalid1 = invalid1.getValid();
-		Appt invalid2 = new Appt(validHour, 72, validDay, validMonth, validYear, title, description);
-		boolean isInvalid2 = invalid2.getValid();
-		Appt invalid3 = new Appt(validHour, validStartMin, 34, validMonth, validYear, title, description);
-		boolean isInvalid3 = invalid3.getValid();
-		Appt invalid4 = new Appt(validHour, validStartMin, validDay, 13, validYear, title, description);
-		boolean isInvalid4 = invalid4.getValid();
+		boolean isValid;
+		for(int i = -100; i < 100; i++){
+				valid.setStartHour(i);
+				isValid = valid.getValid();
+				if(i < 0 || i > 23){
+						assertFalse(isValid);
+				} else {
+						assertTrue(isValid);
+				}
+		}
 		
-		//assersions
-		assertTrue(isValid);
-		assertFalse(isInvalid1);
-		assertFalse(isInvalid2);
-		assertFalse(isInvalid3);
-		assertFalse(isInvalid4);	 
+		valid = new Appt(validHour, validStartMin, validDay, validMonth, validYear, title, description);
+		for(int i = -50; i < 200; i++){
+			valid.setStartMinute(i);
+			isValid = valid.getValid();
+			if(i < 0 || i > 59){
+				assertFalse(isValid);
+			} else {
+				assertTrue(isValid);
+			}
+		}
+		
+		valid = new Appt(validHour, validStartMin, validDay, validMonth, validYear, title, description);
+		for(int i = -25; i < 100; i++){
+			valid.setStartDay(i);
+			isValid = valid.getValid();
+			if(i < 1 || i > 31){
+				assertFalse(isValid);
+			} else {
+				assertTrue(isValid);
+			}
+		}
+		
+		valid = new Appt(validHour, validStartMin, validDay, validMonth, validYear, title, description);
+		for(int i = -10; i < 30; i++){
+			valid.setStartMonth(i);
+			isValid = valid.getValid();
+			if(i < 1 || i > 12){
+				assertFalse(isValid);
+			} else {
+				assertTrue(isValid);
+			}
+		}
+		
 	}
 
+	@Test
+	public void setYearTest(){
+		int validHour = 10;
+		int validStartMin = 10;
+		int validDay = 10;
+		int validMonth = 10;
+		int validYear = 2017;
+		String title = "test";
+		String description = "This is a test";
+		Appt valid = new Appt(validHour, validStartMin, validDay, validMonth, validYear, title, description);
+		boolean isValid = valid.getValid();
+		assertTrue(isValid);
+		valid.setStartMonth(-100);
+		valid.setStartYear(2017);
+		isValid = valid.getValid();
+		assertFalse(isValid);
+	}
+	
 	//this will test that the setters actually set the values they are supposed to.
 	@Test
 	public void testSetters(){
@@ -126,6 +172,28 @@ public class ApptTest {
 		Appt badTest = new Appt(25, 10, 10, 12, 2017, "Bad Test", "This is a bad test");
 		expected = badTest.toString();
 		assertNull(expected);
+		
+		int validHour = 0;
+		int validStartMin = 10;
+		int validDay = 10;
+		int validMonth = 12;
+		int validYear = 2017;
+		String title = "Test";
+		String description = "This is a test";
+		Appt valid = new Appt(validHour, validStartMin, validDay, validMonth, validYear, title, description);
+		for(int i = 0; i < 24; i++){
+			valid.setStartHour(i);
+			String half = (i > 11) ? "pm" : "am";
+			int printHour = i;
+			if(i > 11) {
+				printHour -= 12;
+			}
+			if(printHour == 0){
+				printHour = 12;
+			}
+			String isValid = "\t12/10/2017 at " + printHour +":10" + half + " ,Test, This is a test\n";
+			assertEquals(valid.toString(), isValid);
+		}	
 	}
 
 	
