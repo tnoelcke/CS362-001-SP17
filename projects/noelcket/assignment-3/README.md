@@ -1,9 +1,9 @@
-CS362-001-SP17 Assignment-3 
+Instructions:
+THE EVOSUITE GENERATED TESTS WILL NOT RUN ON THE FLIP SERVER.
+These test will need to be run in an enviornment where maven is version 3.1 or newer.
+I couldn't find a good way that I liked to clean these tests. The tests i created however with work on
+the flip servers.
 
-Due date is Monday, May 15 at 11:59pm (No late submissions will be accepted)
-
-
-
-This is NOT part of the team project. Do it on your own!
-
+Thanks!
+Thomas Noelcke
 
